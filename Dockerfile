@@ -1,22 +1,29 @@
-# use official run time parent image
-FROM node:16 AS build 
-# set the working directory
+# Step 1: Use an official Node.js image as the base image
+FROM node:16 AS build
+
+# Step 2: Set the working directory inside the container
 WORKDIR /app
-# copy package.json and package-lock.json
-COPY package.*.json ./
-# install dependencies
+
+# Step 3: Copy package.json and package-lock.json files
+COPY package*.json ./
+
+# Step 4: Install dependencies
 RUN npm install
-# copy the rest code
+
+# Step 5: Copy the rest of your application code
 COPY . .
-# build the react app for production
+
+# Step 6: Build the app for production
 RUN npm run build
-# use an official nginx for serving the build
+
+# Step 7: Use a lighter web server to serve the build
 FROM nginx:alpine
-# Copy the build folder from the previous step into Nginx's HTML folder
+
+# Step 8: Copy the build output from the first stage to the nginx container
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Expose port 80 to access the app
+# Step 9: Expose the default port for nginx
 EXPOSE 80
 
-# Start the Nginx server
+# Step 10: Start nginx
 CMD ["nginx", "-g", "daemon off;"]
