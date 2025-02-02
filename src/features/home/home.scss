@@ -1,0 +1,12 @@
+.container {
+  .card-container {
+    width: 300px;  // Ensure it has a size
+    height: 200px; 
+    background: white; // Ensure shadow is visible
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);  }
+  .list-container {
+    list-style-type: none;
+  }
+}
